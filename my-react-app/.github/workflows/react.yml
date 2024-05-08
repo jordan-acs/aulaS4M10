@@ -1,15 +1,12 @@
 name: React CI
-
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js
@@ -17,10 +14,13 @@ jobs:
       with:
         node-version: '20'
     - name: Instalar dependências
+      working-directory: ./my-react-app
       run: npm install
     - name: Construir a aplicação React
+      working-directory: ./my-react-app
       run: npm run build
     - name: Construir e rodar Docker
+      working-directory: ./my-react-app
       run: |
         docker build -t my-react-app .
         docker run -d -p 80:80 my-react-app
